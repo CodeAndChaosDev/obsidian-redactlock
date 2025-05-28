@@ -18,8 +18,6 @@ A lightweight Obsidian plugin that lets you **redact sensitive content** in your
 
 ## 📦 Folder Structure
 
-```
-
 obsidian-redactlock/
 ├── obsidian-redactlock/           # Source TypeScript code
 │   ├── main.ts    # Core plugin logic
@@ -33,7 +31,6 @@ obsidian-redactlock/
 │   └── V0.1-alpha.md
 └── README.md
 
-`````
 
 ---
 

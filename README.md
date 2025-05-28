@@ -146,7 +146,7 @@ This plugin does **not encrypt** your notes — it simply hides content unless t
 
 ## 📧 Contact
 
-Made by \[Your Name] — Feedback or feature ideas? Open an issue or reach out!
+Made by \[Bruno Sousa] - [CodeAndChaos] — Feedback or feature ideas? Open an issue or reach out!
 
 ```
 

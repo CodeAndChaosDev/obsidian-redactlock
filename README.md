@@ -48,7 +48,8 @@ obsidian-redactlock/
 
     > 🔒 Reveal Hidden Content
 
-![alt](data/img/image.png)
+
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
 
 3. Click it → Enter your master password → Reveals your content.
 ![Preview Photo](data/img/image1.png)

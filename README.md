@@ -124,7 +124,7 @@ Output files go to `/plugin`, which you can copy into Obsidian.
 
 ## 📜 Patch Notes
 
-See [`patch-notes/V0.1-alpha.md`](./patch-notes/V0.1-alpha.md) for changelog details.
+See [`patch-notes/V0.1-alpha.md`](./Patch-Notes/V0.1-alpha.md) for changelog details.
 
 ---
 

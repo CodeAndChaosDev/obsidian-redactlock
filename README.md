@@ -48,12 +48,12 @@ obsidian-redactlock/
 
     > 🔒 Reveal Hidden Content
 
-![alt](./data/img/image.png)
+![alt](data/img/image.png)
 
 3. Click it → Enter your master password → Reveals your content.
-![Preview Photo](./data/img/image1.png)
+![Preview Photo](data/img/image1.png)
 4. Click again → Redacts it back.
-![Preview](./data/img/image2.png)
+![Preview](data/img/image2.png)
 ---
 
 ## 🔧 How to Install (Manual)

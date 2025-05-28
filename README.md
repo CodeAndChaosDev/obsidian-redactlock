@@ -150,7 +150,3 @@ Made by \[Bruno Sousa] - [CodeAndChaos] — Feedback or feature ideas? Open an i
 
 ```
 
----
-
-Let me know your GitHub username or project link so I can tailor the `git clone` URLs. I can also write a version-specific changelog entry (`V0.1-alpha.md`) if you'd like.
-```

@@ -1,7 +1,7 @@
 {
   "id": "obsidian-redactlock",
   "name": "RedactLock",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "minAppVersion": "1.0.0",
   "description": "Redact and protect blocks with password",
   "author": "Bruno Sousa",

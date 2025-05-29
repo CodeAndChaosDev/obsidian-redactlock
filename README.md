@@ -12,25 +12,26 @@ A lightweight Obsidian plugin that lets you **redact sensitive content** in your
 - 🔐 Hide passwords, secrets, or sensitive text blocks in notes.
 - 🔓 Reveal content **only** with the correct master password.
 - 🔄 Toggle back to redacted with a single click (no re-auth needed).
+- ⏳ Auto-hide revealed content after a set time (optional).
+- 🛠 Plugin settings panel for customization.
 - 💼 Clean, secure UX with native Obsidian style.
 
 ---
 
 ## 📦 Folder Structure
 
+
 obsidian-redactlock/
-├── obsidian-redactlock/           # Source TypeScript code
-│   ├── main.ts    # Core plugin logic
-│   |── passwordModal.ts
-|   └── ... # Rest of the stuff
-├── plugin/        # Compiled plugin files for Obsidian
+├── redactlock/                  # Source TypeScript code
+│   ├── main.ts                  # Core plugin logic
+│   └── PasswordModal.ts         # Custom password modal logic
+├── plugin/                      # Compiled plugin files for Obsidian
 │   ├── main.js
 │   ├── manifest.json
 │   └── styles.css (optional)
 ├── patch-notes/
 │   └── V0.1-alpha.md
 └── README.md
-
 
 ---
 
@@ -47,7 +48,6 @@ obsidian-redactlock/
 2. In **preview mode**, you'll see:
 
     > 🔒 Reveal Hidden Content
-
 
 3. Click it → Enter your master password → Reveals your content.
 4. Click again → Redacts it back.
@@ -67,19 +67,40 @@ cd .obsidian/plugins/
 git clone https://github.com/YOUR-USERNAME/obsidian-redactlock.git
 `````
 
-4. Enable the plugin in Obsidian Settings → Community Plugins.
+4. Enable the plugin in Obsidian Settings → **Community Plugins**.
+
+---
+
+## ⚙️ Plugin Settings
+
+Go to **Settings → RedactLock** to configure the following options:
+
+### 🔑 Master Password
+
+Set your custom password for unlocking redacted blocks.
+
+> This replaces the default password (`letmein`).
+
+### ⏱ Auto-hide Timeout
+
+Enable auto-hiding of revealed content after a delay:
+
+* ✅ Toggle: Enable or disable auto-hide
+* ⏲ Timeout (seconds): Delay before re-redacting the block
+
+If enabled, the plugin will automatically redact the content again after the set duration.
 
 ---
 
 ## 🔐 Default Master Password
 
-The current master password is hardcoded as:
+If no password is set via the plugin settings, the fallback is:
 
 ```
 letmein
 ```
 
-This will be made configurable in a future release. For now, you can change it in `src/main.ts`:
+You can change it in `redactlock/main.ts`:
 
 ```ts
 const MASTER_PASSWORD = "letmein";
@@ -96,11 +117,25 @@ npm run build
 
 ## 🛣 Roadmap
 
-* [ ] Plugin settings panel (custom master password)
-* [ ] Blur-style redaction
-* [ ] Timeout-based auto-hide
-* [ ] Per-block passwords
-* [ ] Encryption-based mode (optional)
+✅ = Completed
+🟡 = In progress
+⬜ = Planned
+
+### High / Medium Priority
+
+* ✅ Plugin settings panel
+* ✅ Auto-hide timeout toggle
+* ✅ Toggle redacted state (re-redact)
+* ⬜ Blur-style redaction effect
+* ⬜ Per-block passwords
+* ⬜ Encryption-based mode (optional)
+
+### Low Priority
+
+* ⬜ Obsidian command palette support
+* ⬜ Markdown syntax customizations
+* ⬜ Lock/unlock all blocks at once
+* ⬜ Theming / UI enhancements
 
 ---
 
@@ -115,13 +150,13 @@ npm install
 npm run build
 ```
 
-Output files go to `/plugin`, which you can copy into Obsidian.
+Output files go to `/plugin`, which you can copy into Obsidian’s `.obsidian/plugins/` folder.
 
 ---
 
 ## 📜 Patch Notes
 
-See [`patch-notes/V0.1-alpha.md`](./Patch-Notes/V0.1-Alpha.md) for changelog details.
+See [`patch-notes/V0.2-alpha.md`](./patch-notes/V0.2-alpha.md) for changelog details.
 
 ---
 
@@ -130,7 +165,7 @@ See [`patch-notes/V0.1-alpha.md`](./Patch-Notes/V0.1-Alpha.md) for changelog det
 Pull requests, suggestions, and issues are welcome!
 
 1. Fork the repo
-2. Make changes
+2. Make your changes
 3. Submit a PR 🚀
 
 ---
@@ -143,4 +178,5 @@ This plugin does **not encrypt** your notes — it simply hides content unless t
 
 ## 📧 Contact
 
-Made by \[Bruno Sousa] - [CodeAndChaos] — Feedback or feature ideas? Open an issue or reach out!
+Made by **Bruno Sousa** — aka \[CodeAndChaos]
+Feedback or feature ideas? Open an issue or reach out!

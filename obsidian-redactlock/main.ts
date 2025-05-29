@@ -1,44 +1,78 @@
 import { Plugin, MarkdownPostProcessorContext, Notice } from "obsidian";
 import { PasswordModal } from "./passwordModal";
+import { RedactLockSettings, DEFAULT_SETTINGS } from "./settings";
+import { RedactLockSettingTab } from "./settingsTab";
 
 const MASTER_PASSWORD = "letmein"; // You can change this or make it configurable
 
 export default class RedactLockPlugin extends Plugin {
+	settings: RedactLockSettings;
+
 	async onload() {
-		this.registerMarkdownCodeBlockProcessor("redact", async (source, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
-			const content = source.trim();
-			const container = el.createDiv({ cls: "redact-container" });
+		await this.loadSettings();
 
-			let revealed = false;
+		this.addSettingTab(new RedactLockSettingTab(this.app, this));
 
-			const button = container.createEl("button", { text: "🔒 Reveal Hidden Content" });
-			let contentEl: HTMLElement | null = null;
+		this.registerMarkdownCodeBlockProcessor("redact", async (source, el, ctx) => {
+			const container = el.createDiv();
+			const isBlur = this.settings.useBlurStyle;
+			const password = this.settings.password;
 
-			const updateView = () => {
-				container.empty();
-				const toggleButton = container.createEl("button", { text: revealed ? "🔒 Hide Content" : "🔒 Reveal Hidden Content" });
-				toggleButton.onclick = () => {
-					if (!revealed) {
-						new PasswordModal(this.app, (entered) => {
-							if (entered === MASTER_PASSWORD) {
-								revealed = true;
-								updateView();
-							} else {
-								new Notice("Incorrect password.");
-							}
-						}).open();
+			let redacted = true;
+			const contentEl = container.createDiv();
+			contentEl.setText(source);
+
+			const updateVisibility = () => {
+				if (redacted) {
+					if (isBlur) {
+						contentEl.style.filter = "blur(8px)";
 					} else {
-						revealed = false;
-						updateView();
+						contentEl.setText("█".repeat(source.length));
 					}
-				};
-
-				if (revealed) {
-					contentEl = container.createEl("pre", { text: content });
+				} else {
+					contentEl.setText(source);
+					contentEl.style.filter = "none";
 				}
 			};
 
-			updateView();
+			updateVisibility();
+
+			const btn = container.createEl("button", { text: redacted ? "Unlock" : "Redact" });
+			btn.onclick = async () => {
+				if (redacted) {
+					const input = await new Promise<string | null>((resolve) => {
+						const modal = new PasswordModal(this.app, (result) => resolve(result));
+						modal.open();
+					});
+					if (input === password) {
+						redacted = false;
+						updateVisibility();
+
+						// Auto-hide logic
+						if (this.settings.autoHide) {
+							setTimeout(() => {
+								redacted = true;
+								updateVisibility();
+								btn.setText("Unlock");
+							}, this.settings.autoHideDelay * 1000);
+						}
+					} else {
+						new Notice("Wrong password!");
+					}
+				} else {
+					redacted = true;
+					updateVisibility();
+				}
+				btn.setText(redacted ? "Unlock" : "Redact");
+			};
 		});
+	}
+
+	async loadSettings() {
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+	}
+
+	async saveSettings() {
+		await this.saveData(this.settings);
 	}
 }
